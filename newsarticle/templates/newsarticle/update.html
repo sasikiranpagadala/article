@@ -1,0 +1,12 @@
+{% extends 'newsarticle/base.html'%}
+{% block content %}
+	<div align="center">
+	<h1>Update content here</h1>
+	<form action="/up/{{id}}" method="post">
+		{% csrf_token %}
+		Title: <input type="text" name="val1"><br><br>
+		Content: <input type="text" name="val2"><br><br>
+		<input type="submit" name="" value="Add">
+	</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'newsarticle/base.html'%}
+{% block content %}
+	{%for post in users%}
+    <article class="media content-section">
+      <div class="media-body">
+          <div class="article-metadata">
+              Author: {{ post.author }}
+              <small class="text-muted"><h3>Title:{{ post.title }}</h3></small>
+          </div>
+            <h2>{{ post.content }}</h2>
+            <p class="article-content">{{ post.date_posted|date:"F d, Y" }}</p>
+      </div>
+      {% if user.is_authenticated and user.id == post.author.id %}
+        <form action="/getuser/{{post.id}}/{{user.id}}" method="post">
+            {% csrf_token %}
+          <input type="submit" name="delete" value='delete'>
+          <!-- <button href=/getuser/{{user.id}}>Delete</button> -->
+        </form>
+        <form action="/update/{{post.id}}" method="post">
+            {% csrf_token %}
+          <input type="submit" name="update" value='update'>
+        </form>
+      {% endif %}
+
+    </article>
+  {%endfor%}
+    {% if user.is_authenticated %}
+      <form action="input/{{user.id}}" method="post">
+        {% csrf_token %}
+        <input type="submit" name="addcontent" value='Add content'>
+      </form>
+    {% endif %}
+{% endblock %}
+<!-- <a href="/getuser/{{user.id}}/">nithin</a> -->
